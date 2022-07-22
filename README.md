@@ -20,7 +20,7 @@ It would appear that protecting the page with `PAGE_NOACCESS` containing our met
 
 # VERY-VERY Important 📝✍️
 - Remember, the code looks for an instance of explorer.exe( not Internet Explorer for Christ's sake ) to inject into, if you want to inject into another process, you MUST change it in the `danger.cpp` code.
-- Also remember to provide the `sh_code` variable with your meterpreter shellcode. That line( line 54 ) looks something like this:
+- Also remember to provide the `sh_code` variable with your meterpreter shellcode. That line( `line 54` ) looks something like this:
 ```cpp
   unsigned char sh_code[]{/* paste your shellcode here */};
 ```
