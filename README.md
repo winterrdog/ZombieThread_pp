@@ -24,6 +24,7 @@ It would appear that protecting the page with `PAGE_NOACCESS` containing our met
 ```cpp
   unsigned char sh_code[]{/* paste your shellcode here */};
 ```
+- You can use `mingw` or `Visual Studio` to compile this program's code( Can't illustrate on how to do that )
 
 # AV Scan Results 🚨🚨
 
