@@ -6,10 +6,12 @@ DWORD FindProcessId(const char *processName, const size_t &procStrLen)
 // ref:
 // https://docs.microsoft.com/en-us/windows/win32/toolhelp/taking-a-snapshot-and-viewing-processes
 {
+  DWORD result{0};
   // Take a snapshot of all processes in the system.
   HANDLE hProcessSnap{CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0)};
   if (INVALID_HANDLE_VALUE == hProcessSnap) {
-    return 0;
+    cout << "[-] failed to take snapshot all processes on the system\n";
+    return result;
   }
 
   PROCESSENTRY32 pe32{};
@@ -19,19 +21,22 @@ DWORD FindProcessId(const char *processName, const size_t &procStrLen)
   // and exit if unsuccessful
   if (!Process32First(hProcessSnap, &pe32)) {
     CloseHandle(hProcessSnap); // clean the snapshot object
+
     cout << "[-] Failed to gather information on system processes!\n";
-    return 0;
+    return result;
   }
 
   do {
     if (!strncmp(processName, pe32.szExeFile, procStrLen)) {
       cout << "[+] FOUND process \"" << pe32.szExeFile << "\" ...! :)" << endl;
-
-      // Do some clean up work and return
-      CloseHandle(hProcessSnap);
-      return pe32.th32ProcessID;
+      result = pe32.th32ProcessID;
+      break;
     }
   } while (Process32Next(hProcessSnap, &pe32));
+
+  // Do some clean up work and return
+  CloseHandle(hProcessSnap);
+  return result;
 }
 
 HIT_EM_UP {
